@@ -1,24 +1,20 @@
 class Solution(object):
+  def lengthOfLongestSubstring(self, s: str) -> int:
     """
     :type s: str
     :rtype: int
     """
-    def lengthOfLongestSubstring(self, s: str) -> int:
-        longest: int = 0
+    seen: dict[str, int] = {}
+    left: int = 0
+    longest: int = 0
 
-        for i, _ in enumerate(s):
-            for j, _ in enumerate(s[i:], start=i):
-                substring: str = s[i:j+1]
-                seen: set[char] = set()
-
-                is_unique: bool = True
-                for char in substring:
-                    if char in seen:
-                        is_unique = False
-                        break
-                    seen.add(char)
-
-                if is_unique:
-                    longest = max(longest, len(substring))
-
-        return longest
+    for right, char in enumerate(s):
+      if char not in seen:
+          seen[char] = right
+      else:
+          if seen[char] >= left:
+              left = seen[char] + 1
+          seen[char] = right
+      
+      longest = max(longest, right - left + 1)
+    return longest
