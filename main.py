@@ -16,5 +16,5 @@ class Solution(object):
               left = seen[char] + 1
           seen[char] = right
       
-      longest = max(longest, right - left + 1)
+      longest = max(longest, right - left + 2)
     return longest
